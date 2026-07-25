@@ -151,12 +151,7 @@
     gap:18px;
     padding:24px;
   }
-  .pulse-line{
-    width:56%;
-    height:2px;
-    background:var(--branco);
-    animation:pulse 3s ease-in-out infinite;
-  }
+  canvas.hero-wave{width:100%; height:120px; display:block;}
   .hero-graphic-label{
     font-family:'Space Mono',monospace;
     font-size:11px;
@@ -164,10 +159,6 @@
     color:var(--cinza);
     text-transform:uppercase;
     margin:0;
-  }
-  @keyframes pulse{
-    0%,100%{transform:scaleX(0.3); opacity:0.35;}
-    50%{transform:scaleX(1); opacity:1;}
   }
 
   /* ---------- Como funciona ---------- */
@@ -240,7 +231,6 @@
   }
   .card-cover img{
     width:100%;height:100%;object-fit:cover;display:block;
-    filter:grayscale(1) contrast(1.1);
   }
   .card-spine{
     position:absolute;
@@ -288,7 +278,8 @@
   .play-btn:focus-visible{outline:2px solid var(--branco); outline-offset:2px;}
   .play-btn svg{width:14px;height:14px;}
 
-  canvas.mini-meter{flex:1; height:36px; width:100%;}
+  .progress-track{flex:1; height:2px; background:rgba(255,255,255,0.2); position:relative;}
+  .progress-fill{height:100%; width:0%; background:var(--branco);}
 
   .card-status{
     font-family:'Space Mono',monospace;
@@ -387,7 +378,7 @@
 <header>
   <div class="wrap nav-inner">
     <a href="#top" class="brand">
-      <img src="assets/logo.svg" alt="Logo HYPERULTRAMEGA" class="brand-logo">
+      <img src="assets/logo.png" alt="Logo HYPERULTRAMEGA" class="brand-logo">
       <span class="brand-name" id="brandName">HYPERULTRAMEGA</span>
     </a>
     <nav class="links">
@@ -409,7 +400,7 @@
         <a href="#catalog" class="btn btn-primary">Ver o catálogo</a>
       </div>
       <div class="hero-graphic">
-        <div class="pulse-line"></div>
+        <canvas class="hero-wave" id="heroWave" width="440" height="240"></canvas>
         <p class="hero-graphic-label">Sinal de Áudio</p>
       </div>
     </div>
@@ -420,7 +411,7 @@
       <div>
         <span class="step-num mono">01</span>
         <p class="step-title">Ouça a prévia</p>
-        <p class="step-body">Aperte o play em qualquer faixa. A Tag vai só no início do beat na versão final.</p>
+        <p class="step-body">Aperte o play em qualquer faixa. O beat final vai só com uma tag no início.</p>
       </div>
       <div>
         <span class="step-num mono">02</span>
@@ -456,7 +447,7 @@
           <p class="license-name">Licença MP3</p>
           <p class="license-price">R$50</p>
           <ul class="license-terms">
-            <li>MP3 entregue no mesmo dia</li>
+            <li>MP3, entregue no mesmo dia</li>
             <li>Até 5.000 streams / vendas</li>
             <li>Crédito obrigatório: "Prod. by Kosmonautta"</li>
             <li>Não-exclusiva — o beat continua no catálogo</li>
@@ -526,21 +517,21 @@ const CONFIG = {
 };
 
 const BEATS = [
-  { code:"FAIXA-001", title:"SUPERNOVA",     genre:"HYPERPOP",      bpm:140, key:"Fá Menor",  audio:"audio/f-001.mp3", cover:"covers/f-001.jpg" },
-  { code:"FAIXA-002", title:"ION",        genre:"HYPERPOP",  bpm:92,  key:"Dó Menor",  audio:"audio/f-002.mp3", cover:"covers/f-002.jpg" },
-  { code:"FAIXA-003", title:"YOKAI",     genre:"HYPERPOP",     bpm:143, key:"Sol Menor", audio:"audio/f-003.mp3", cover:"covers/f-003.jpg" },
-  { code:"FAIXA-004", title:"SPIRITBOX",        genre:"HYPERPOP",       bpm:78,  key:"Lá Maior",  audio:"audio/f-004.mp3", cover:"covers/f-004.jpg" },
-  { code:"FAIXA-005", title:"HANSHIN TIGERS",         genre:"HYPERPOP",  bpm:104, key:"Ré Menor",  audio:"audio/f-005.mp3", cover:"covers/f-005.jpg" },
-  { code:"FAIXA-006", title:"SAGITÁRIO",         genre:"HYPERPOP",  bpm:104, key:"Ré Menor",  audio:"audio/f-006.mp3", cover:"covers/f-006.jpg" },
-  { code:"FAIXA-007", title:"SUPER SENTAI", genre:"HYPERPOP",     bpm:132,  key:"A# Major",  audio:"audio/f-007.mp3", cover:"covers/f-007.jpg" },
-  { code:"FAIXA-008", title:"ABRIL", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-008.mp3", cover:"covers/f-008.jpg" },
-  { code:"FAIXA-009", title:"LIMINALIDADE", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-009.mp3", cover:"covers/f-009.jpg" },
-  { code:"FAIXA-0010", title:"LASER FLIP", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-010.mp3", cover:"covers/f-010.jpg" },
-  { code:"FAIXA-0011", title:"PLÁSTICO BOLHA", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-011.mp3", cover:"covers/f-011.jpg" },
-  { code:"FAIXA-0012", title:"ANDROMEDA", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-012.mp3", cover:"covers/f-012.jpg" },
-  { code:"FAIXA-0013", title:"KABOOM", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-013.mp3", cover:"covers/f-013.jpg" },
-  { code:"FAIXA-0014", title:"HOSHI", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-014.mp3", cover:"covers/f-014.jpg" },
-  { code:"FAIXA-0015", title:"BEYBLADE", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-015.mp3", cover:"covers/f-015.jpg" }
+  { code:"FAIXA-001", title:"SUPERNOVA",     genre:"HYPERPOP",      bpm:170, key:"C Major",  audio:"audio/f-001.mp3", cover:"covers/f-001.png" },
+  { code:"FAIXA-002", title:"ION",        genre:"HYPERPOP",  bpm:92,  key:"Dó Menor",  audio:"audio/f-002.mp3", cover:"covers/f-002.png" },
+  { code:"FAIXA-003", title:"YOKAI",     genre:"HYPERPOP",     bpm:143, key:"Sol Menor", audio:"audio/f-003.mp3", cover:"covers/f-003.png" },
+  { code:"FAIXA-004", title:"SPIRITBOX",        genre:"HYPERPOP",       bpm:78,  key:"Lá Maior",  audio:"audio/f-004.mp3", cover:"covers/f-004.png" },
+  { code:"FAIXA-005", title:"HANSHIN TIGERS",         genre:"HYPERPOP",  bpm:104, key:"Ré Menor",  audio:"audio/f-005.mp3", cover:"covers/f-005.png" },
+  { code:"FAIXA-006", title:"SAGITÁRIO",         genre:"HYPERPOP",  bpm:104, key:"Ré Menor",  audio:"audio/f-006.mp3", cover:"covers/f-006.png" },
+  { code:"FAIXA-007", title:"SUPER SENTAI", genre:"HYPERPOP",     bpm:132,  key:"A# Major",  audio:"audio/f-007.mp3", cover:"covers/f-007.png" },
+  { code:"FAIXA-008", title:"ABRIL", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-008.mp3", cover:"covers/f-008.png" },
+  { code:"FAIXA-009", title:"LIMINALIDADE", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-009.mp3", cover:"covers/f-009.png" },
+  { code:"FAIXA-0010", title:"LASER FLIP", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-010.mp3", cover:"covers/f-010.png" },
+  { code:"FAIXA-0011", title:"PLÁSTICO BOLHA", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-011.mp3", cover:"covers/f-011.png" },
+  { code:"FAIXA-0012", title:"ANDROMEDA", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-012.mp3", cover:"covers/f-012.png" },
+  { code:"FAIXA-0013", title:"KABOOM", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-013.mp3", cover:"covers/f-013.png" },
+  { code:"FAIXA-0014", title:"HOSHI", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-014.mp3", cover:"covers/f-014.png" },
+  { code:"FAIXA-0015", title:"BEYBLADE", genre:"HYPERPOP",     bpm:82,  key:"Mi Menor",  audio:"audio/f-015.mp3", cover:"covers/f-015.png" }
 ];
 
 /* ========================= Fim da seção editável ========================= */
@@ -563,46 +554,62 @@ function igLink(){
 document.getElementById("contactWhatsapp").href = waLinkGeneral();
 document.getElementById("contactInstagram").href = igLink();
 
-/* ---------------- Visualizador de barras (equalizador minimalista) ---------------- */
-function drawBars(canvas, levels){
+let audioCtx = null;
+let currentlyPlaying = null; // { audio, analyser, waveData, progressFill, playBtn }
+
+/* ---------------- Onda do hero (reage ao que estiver tocando) ---------------- */
+const heroWave = document.getElementById("heroWave");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let idlePhase = 0;
+
+function drawWave(canvas, dataArray){
   const ctx = canvas.getContext("2d");
   const w = canvas.width, h = canvas.height;
   ctx.clearRect(0,0,w,h);
-  const n = levels.length;
-  const gap = w*0.05;
-  const barW = (w - gap*(n-1)) / n;
-  ctx.fillStyle = "#FFFFFF";
-  levels.forEach((lvl,i)=>{
-    const barH = Math.max(h*0.08, Math.min(lvl,1)*h);
-    const x = i*(barW+gap);
-    const y = h - barH;
-    ctx.fillRect(x,y,barW,barH);
-  });
-}
-function levelsFromAnalyser(dataArray, n){
-  const groupSize = Math.floor(dataArray.length/n) || 1;
-  const levels = [];
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "#FFFFFF";
+  ctx.beginPath();
+  const n = dataArray.length;
+  const sliceWidth = w / (n - 1);
+  let x = 0;
   for (let i=0;i<n;i++){
-    let sum = 0;
-    for (let j=0;j<groupSize;j++){ sum += dataArray[i*groupSize+j] || 0; }
-    levels.push((sum/groupSize)/255);
+    const v = dataArray[i] / 128.0; // ~0..2, 1 = linha central
+    const y = (v * h) / 2;
+    if (i === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    x += sliceWidth;
   }
-  return levels;
+  ctx.stroke();
 }
-const BASELINE = [0.12,0.2,0.14,0.22,0.16,0.1];
+
+function heroLoop(){
+  if (currentlyPlaying){
+    currentlyPlaying.analyser.getByteTimeDomainData(currentlyPlaying.waveData);
+    drawWave(heroWave, currentlyPlaying.waveData);
+  } else if (!reduceMotion) {
+    idlePhase += 0.06;
+    const n = 64;
+    const synthetic = new Uint8Array(n);
+    for (let i=0;i<n;i++){
+      synthetic[i] = 128 + Math.sin(idlePhase + i*0.35) * 6;
+    }
+    drawWave(heroWave, synthetic);
+  }
+  requestAnimationFrame(heroLoop);
+}
+if (!reduceMotion){
+  heroLoop();
+} else {
+  drawWave(heroWave, new Uint8Array(64).fill(128));
+}
 
 /* ---------------- Renderização do catálogo ---------------- */
 const grid = document.getElementById("catalogGrid");
-document.getElementById("catalogCount").textContent = `${BEATS.length} fitas disponíveis`;
-
-let audioCtx = null;
-let currentlyPlaying = null; // { audio, rafId, canvas, playBtn }
+document.getElementById("catalogCount").textContent = `${BEATS.length} faixas disponíveis`;
 
 function stopCurrent(){
   if (currentlyPlaying){
     currentlyPlaying.audio.pause();
-    cancelAnimationFrame(currentlyPlaying.rafId);
-    drawBars(currentlyPlaying.canvas, BASELINE);
+    currentlyPlaying.progressFill.style.width = "0%";
     currentlyPlaying.playBtn.classList.remove("is-playing");
     currentlyPlaying.playBtn.innerHTML = playIcon();
     currentlyPlaying = null;
@@ -635,13 +642,13 @@ BEATS.forEach(beat=>{
       </div>
       <div class="card-controls">
         <button class="play-btn" aria-label="Ouvir prévia de ${beat.title}">${playIcon()}</button>
-        <canvas class="mini-meter" width="180" height="40"></canvas>
+        <div class="progress-track"><div class="progress-fill"></div></div>
       </div>
       <p class="card-status mono"></p>
       <div class="card-actions">
         <a class="btn buy-btn btn-primary" target="_blank" rel="noopener">Comprar — WhatsApp</a>
         <a class="btn dm-btn btn-ghost" target="_blank" rel="noopener" aria-label="Chamar no Instagram sobre ${beat.title}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg>
         </a>
       </div>
       <p class="license-note">Valores conforme a licença — veja os <a href="#licensing">termos completos</a>.</p>
@@ -651,7 +658,7 @@ BEATS.forEach(beat=>{
   const audio = new Audio(beat.audio);
   audio.preload = "none";
   const playBtn = card.querySelector(".play-btn");
-  const miniMeter = card.querySelector(".mini-meter");
+  const progressFill = card.querySelector(".progress-fill");
   const statusEl = card.querySelector(".card-status");
   const buyBtn = card.querySelector(".buy-btn");
   const dmBtn = card.querySelector(".dm-btn");
@@ -659,7 +666,7 @@ BEATS.forEach(beat=>{
   buyBtn.href = waLink(beat.title, beat.code);
   dmBtn.href = igLink();
 
-  let source = null, analyser = null, dataArray = null;
+  let source = null, analyser = null, waveData = null;
 
   function ensureAudioGraph(){
     if (!audioCtx){
@@ -668,17 +675,11 @@ BEATS.forEach(beat=>{
     if (!source){
       source = audioCtx.createMediaElementSource(audio);
       analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 64;
-      dataArray = new Uint8Array(analyser.frequencyBinCount);
+      analyser.fftSize = 256;
+      waveData = new Uint8Array(analyser.fftSize);
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
     }
-  }
-
-  function meterLoop(){
-    analyser.getByteFrequencyData(dataArray);
-    drawBars(miniMeter, levelsFromAnalyser(dataArray, 6));
-    currentlyPlaying.rafId = requestAnimationFrame(meterLoop);
   }
 
   playBtn.addEventListener("click", ()=>{
@@ -696,8 +697,12 @@ BEATS.forEach(beat=>{
     playBtn.classList.add("is-playing");
     playBtn.innerHTML = pauseIcon();
     statusEl.textContent = "";
-    currentlyPlaying = { audio, canvas: miniMeter, rafId:null, playBtn };
-    meterLoop();
+    currentlyPlaying = { audio, analyser, waveData, progressFill, playBtn };
+  });
+  audio.addEventListener("timeupdate", ()=>{
+    if (audio.duration){
+      progressFill.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
+    }
   });
   audio.addEventListener("pause", ()=>{
     playBtn.classList.remove("is-playing");
@@ -713,7 +718,6 @@ BEATS.forEach(beat=>{
     playBtn.style.cursor = "default";
   });
 
-  drawBars(miniMeter, BASELINE);
   grid.appendChild(card);
 });
 </script>
